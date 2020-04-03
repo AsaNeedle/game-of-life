@@ -1,4 +1,4 @@
-
+  
 let gridSize = 12;
 
 const setRandomGameState = () => {
@@ -106,10 +106,34 @@ const incrementGameState = (gameState) => {
   }
   return nextGameState;
 }
+function arraysEqual(a, b) {
+  if (a === b) return true;
+  if (a == null || b == null) return false;
+  if (a.length != b.length) return false;
+  for (let i = 0; i < a.length; ++i) {
+    if (typeof a[i] != "number"){
+      if (arraysEqual(a[i], b[i]) == false){
+        return false
+      }
+    } else if (a[i] !== b[i]){
+      return false
+    };
+  }
+  return true;
+}
 
 let currentGameState = setRandomGameState();
 drawGameState(currentGameState);
-drawGameState(incrementGameState(currentGameState));
+let nextGameState = incrementGameState(currentGameState)
+while (!arraysEqual(currentGameState, nextGameState)) {
+  currentGameState = nextGameState;
+  drawGameState(currentGameState);
+  nextGameState = incrementGameState(currentGameState);
+}
+
+
+
+// drawGameState();
 
 // const readline = require('readline');
 // readline.emitKeypressEvents(process.stdin);
